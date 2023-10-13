@@ -95,6 +95,7 @@ const headerArray = ["Testsieger", "Bester", "Preis", "Testsieg", "Bank"];
 export default function StickyTable() {
   const [pinArray, setPinArray] = useState([]);
   const [nonPinArray, setNonPinArray] = useState([]);
+  const [error, setError] = useState("");
   const containerRef = useRef(null);
 
   const scrollNext = () => {
@@ -116,7 +117,7 @@ export default function StickyTable() {
       setPinArray(filterPin);
       setNonPinArray(filterNonPin);
     } else if (pinArray.length === 2) {
-      console.log("you can not pin more than two");
+      setError("You can't pin more than two columns.");
     } else {
       const filterPin = nonPinArray.filter((item) => item === removeText);
       const filterNonPin = nonPinArray.filter((item) => item !== removeText);
@@ -127,6 +128,11 @@ export default function StickyTable() {
 
   return (
     <Container>
+      {error && (
+        <Typography my={2} pl={7} sx={{ fontSize: "14px", color: "#D70002" }}>
+          <span style={{ fontWeight: "700" }}>Note:</span> {error}
+        </Typography>
+      )}
       <TableContainer
         style={{ maxWidth: 1000, margin: "auto" }}
         ref={containerRef}
